@@ -63,12 +63,14 @@ Compra 4 (varios articulos del mismo producto)
             */
 
             Purchase myPurchase = new Purchase();
-            Product item1 = new Product(5, 0);
-            Product item2 = new Product(3, 5);
+            Product item1 = new Product("item1", 5, 0);
+            Product item2 = new Product("item2", 3, 5);
             myPurchase.ProductsList.Add(item1);
             myPurchase.ProductsList.Add(item2);
             float discount = 5;
             myPurchase.ProductsList[0].SetDiscount();
+            Console.WriteLine("You purchased {0}, discount: {1}%", item1.itemName,item1.discountPercent );
+            //Ahora hay que calcular el descuento que se le va a restar al precio
             //discount = myPurchase.UpdateDiscount();
             Assert.AreEqual(5, discount);
 
@@ -80,7 +82,6 @@ Compra 4 (varios articulos del mismo producto)
              . Que calcule el precio final con los precios originales
              . 
              */
-            Console.WriteLine("hola");
         }
     }
 }

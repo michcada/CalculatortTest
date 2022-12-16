@@ -6,10 +6,11 @@
 
         public float price;
         public int discountPercent { get; set; }
+        public string itemName;
 
-
-        public Product(float myPrice, int myPercent)
+        public Product(string name, float myPrice, int myPercent)
         {
+            this.itemName = name;
             this.price = myPrice;
             this.discountPercent = myPercent;
             //SetDiscount();
@@ -25,10 +26,15 @@
             {
                 Console.WriteLine("This product has a not valid discount\nPlease enter a valid value");
                // myPercent= int.Parse(Console.ReadLine());
-               if (myPercent < LowerLimit) { myPercent = 5; }
+               if (myPercent < LowerLimit) 
+                { 
+                    myPercent = 5;
+                    this.discountPercent = myPercent;
+                }
                 else
                 {
                     myPercent = 60;
+                    this.discountPercent = myPercent;
                 }
             }
         }
