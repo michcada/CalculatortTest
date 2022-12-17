@@ -7,81 +7,59 @@ namespace TestCalculator
     public class UnitTest1
     {
         [TestMethod]
-        public void TestMethod1()
+
+        //Test para validar que el descuento sea mayor a 10 o menor a 60 o igual a 5
+        public void TestDiscount()
         {
-            /* El descuento es asignado para cada articulo.
-Ejemplo con 3 articulos.
-    libro 1-> 10% 10$
-    libro 2-> 15% 10$
-    libro 3-> 20% 10$
-    libro 4-> 30% 10$
+            Product product = new Product("Producto 1", 100, 5);
+            product.SetDiscount();
+            Assert.AreEqual(5, product.discountPercent);
+            Assert.AreEqual(10, product.discountPercent);
+            Assert.AreEqual(60, product.discountPercent);
 
- 
+            Assert.AreEqual("Error: El descuento debe ser mayor a 10 o menor a 60 o igual a 5", product.SetDiscount());
+            Assert.AreEqual("El descuento es correcto", product.SetDiscount());
 
-Compra 1
-    Libro 1 9$
-    Libro 2 8.5$
-    Total 17.5$ Descuento 1$ + 1.5$ = 2.5$
+        }
 
- 
+        //Test para validar que el precio final sea correcto
+        public void TestFinalAmmount()
+        {
+            Purchase purchase = new Purchase();
+            Product product1 = new Product("Producto 1", 1000, 5);
 
-    product item1 = new Product ("libro 1",10,10);
+            purchase.Add(product1);
+            purchase.UpdateFinalAmmount();
 
- 
+            Assert.AreEqual(950, purchase.finalAmmount);
 
-    Purchase myPurchase = new Purchase();
-    myPurchase.Add(item1);
-    float discount = 0;
-    discount = myPurchase.UpdateDiscount(); || discount = myPurchase.totalDiscount;
-    Assert(discount,2.5);
+            Product product2 = new Product("Producto 2", 1000, 10);
 
- 
+            purchase.Add(product2);
+            purchase.UpdateFinalAmmount();
 
+            Assert.AreEqual(1900, purchase.finalAmmount);
 
-Compra 2
-    Libro 1 9$
-    Libro 2 8.5$
-    Libro 3 8$
-    Total 25.5$ Descuento 1$ + 1.5$ +2$ = 4.5$
+        }
 
- 
+        //test para validar que el descuento adicional se aplique si la cantidad de productos es mayor a 3
+        public void TestDiscountAdditional()
+        {
+            Purchase purchase = new Purchase();
+            Product product1 = new Product("Producto 1", 1000, 5);  //50  950
+            Product product2 = new Product("Producto 2", 1000, 10); //100 900
+            Product product3 = new Product("Producto 3", 1000, 15); //150 850
+            Product product4 = new Product("Producto 4", 1000, 20); //200 800
 
-Compra 3 (mas de 3 productos. 10% adicional sobre el total)
-    Libro 1 9$
-    Libro 2 8.5$
-    Libro 3 8$
-    Libro 4 7$
-    Total 28.5$ - [4$] Descuento 1$ + 1.5$ + 2$ + 3$ + [4$] = 11.5$
+            purchase.Add(product1);
+            purchase.Add(product2);
+            purchase.Add(product3);
+            purchase.Add(product4);
+            purchase.UpdateFinalAmmount();
 
- 
+            Assert.AreEqual(1800, purchase.finalAmmount);
 
-Compra 4 (varios articulos del mismo producto)
-    Libro 1 9$
-    Libro 1 9$
-    Total 18$    Descuento 2$
-
-            */
-
-            Purchase myPurchase = new Purchase();
-            Product item1 = new Product("item1", 5, 0);
-            Product item2 = new Product("item2", 3, 5);
-            myPurchase.ProductsList.Add(item1);
-            myPurchase.ProductsList.Add(item2);
-            float discount = 5;
-            myPurchase.ProductsList[0].SetDiscount();
-            Console.WriteLine("You purchased {0}, discount: {1}%", item1.itemName,item1.discountPercent );
-            //Ahora hay que calcular el descuento que se le va a restar al precio
-            //discount = myPurchase.UpdateDiscount();
-            Assert.AreEqual(5, discount);
-
-            /*
-             . Se compra un producto y se retorna el descuento
-             . Que asigne un porcentaje de descuento del 5% al producto que no tenga descuento definido
-             . Cada articulo debe tener un descuento que no sea menor a 5 ni mayor a 60
-             . Que sume dos descuentos diferentes
-             . Que calcule el precio final con los precios originales
-             . 
-             */
         }
     }
 }
+
