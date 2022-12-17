@@ -17,17 +17,23 @@
         }
 
         //valida que el descuento sea mayor a 10 o menor a 60 o igual a 5. si no cumple mostar mensaje de erorr
-        public string SetDiscount()
+        public string CheckDiscount()
         {
-            if (discountPercent < 10 || discountPercent > 60 || discountPercent == 5)
+            if (discountPercent == 5 || (discountPercent >= 10 && discountPercent <= 60))
             {
-                return "Error: El descuento debe ser mayor a 10 o menor a 60 o igual a 5";
+                return "El descuento es correcto";
             }
             else
             {
-                return "El descuento es correcto";
+                return "Error: El descuento debe ser mayor a 10 o menor a 60 o igual a 5";
 
             }
+        }
+
+        public float ApplyDiscount()
+        {            
+            return this.price * discountPercent/100;
+        }
 
     }
 }
