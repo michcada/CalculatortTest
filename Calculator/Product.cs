@@ -8,44 +8,32 @@
         public int discountPercent { get; set; }
         public string itemName;
 
-        public Product(string name, float myPrice, int myPercent)
+        //crear el constructor, si no se pasa el descuento, se le asigna 5
+        public Product(string name, float price, int discountPercent = 5)
         {
             this.itemName = name;
-            this.price = myPrice;
-            this.discountPercent = myPercent;
-            //SetDiscount();
+            this.price = price;
+            this.discountPercent = discountPercent;
         }
 
-        public void SetDiscount()
+        //valida que el descuento sea mayor a 10 o menor a 60 o igual a 5. si no cumple mostar mensaje de erorr
+        public string CheckDiscount()
         {
-            int myPercent = this.discountPercent;
-            int LowerLimit = 5;
-            int UpperLimit = 60;
-
-            if (myPercent < LowerLimit || myPercent > UpperLimit)
+            if (discountPercent == 5 || (discountPercent >= 10 && discountPercent <= 60))
             {
-                Console.WriteLine("This product has a not valid discount\nPlease enter a valid value");
-               // myPercent= int.Parse(Console.ReadLine());
-               if (myPercent < LowerLimit) 
-                { 
-                    myPercent = 5;
-                    this.discountPercent = myPercent;
-                }
-                else
-                {
-                    myPercent = 60;
-                    this.discountPercent = myPercent;
-                }
+                return "El descuento es correcto";
+            }
+            else
+            {
+                return "Error: El descuento debe ser mayor a 10 o menor a 60 o igual a 5";
+
             }
         }
-        /*
-        public Product(float myPrice)
-        {
-            this.price = myPrice;
-            this.discountPercent = 5; //cuando solo se pasa el precio, el descuento por defecto es 5
-        }*/
 
-
+        public float ApplyDiscount()
+        {            
+            return this.price * discountPercent/100;
+        }
 
     }
 }

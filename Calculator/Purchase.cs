@@ -10,40 +10,48 @@ namespace Calculator
     {
         public List <Product> ProductsList = new List <Product> ();
         public float finalAmmount;
+        public float totalDiscount;
         public Purchase()
         {
             finalAmmount = 0;
         }
 
-        public float ShowProduct()
+        //metodo para agregar productos a la lista
+        public void Add(Product item)
         {
-            int i = 0;
-            foreach (Product pro in ProductsList)
-            {
-                Console.WriteLine(ProductsList[i]);
-            }
-            
-            return 0;
+            ProductsList.Add(item);
         }
 
+        //metodo para calcular el descuento
         public float UpdateDiscount()
         {
-            float discount;
-
-            return 0;
+            float discount = 0;
+            foreach (Product item in ProductsList)
+            {
+                discount += item.discountPercent;
+            }
+            return discount;
         }
 
-        public void CalculateFAmmount()
+        //metodo para calcular el precio final sin descuentos
+        public float UpdateFinalAmmount()
         {
-            /*foreach (Product p in ProductsList)
+            float discount = UpdateDiscount();
+            
+            foreach (Product item in ProductsList)
             {
-                if ()
-                {
+                finalAmmount += item.price - item.ApplyDiscount();
+            }
+            
+           // si la cantidad de productos es mayor a 3, se aplica un descuento adicional del 10%
 
-                }
+            if (ProductsList.Count > 3)
+            {
+                finalAmmount = finalAmmount - (finalAmmount * 10 / 100);
 
-            }*/
+            }
 
+            return finalAmmount;
         }
 
     }
