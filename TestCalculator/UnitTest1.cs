@@ -60,6 +60,25 @@ namespace TestCalculator
             Assert.AreEqual(1800, purchase.finalAmmount);
 
         }
+
+        //test para validar el total del descuento
+        public void TestDiscountTotal()
+        {
+            Purchase purchase = new Purchase();
+            Product product1 = new Product("Producto 1", 1000, 5);  //50  950
+            Product product2 = new Product("Producto 2", 1000, 10); //100 900
+            Product product3 = new Product("Producto 3", 1000, 15); //150 850
+            Product product4 = new Product("Producto 4", 1000, 20); //200 800
+
+            purchase.Add(product1);
+            purchase.Add(product2);
+            purchase.Add(product3);
+            purchase.Add(product4);
+            purchase.UpdateFinalAmmount();
+
+            Assert.AreEqual(500, purchase.UpdateDiscount());
+
+        }
     }
 }
 
