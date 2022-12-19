@@ -7,41 +7,23 @@ namespace TestCalculator
     public class UnitTest1
     {
         [TestMethod]
-
-        //Test para validar que el descuento sea mayor a 10 o menor a 60 o igual a 5
-        public void TestDiscount()
-        {
-            Product product = new Product("Producto 1", 100, 5);
-            product.SetDiscount();
-            Assert.AreEqual(5, product.discountPercent);
-            Assert.AreEqual(10, product.discountPercent);
-            Assert.AreEqual(60, product.discountPercent);
-
-            Assert.AreEqual("Error: El descuento debe ser mayor a 10 o menor a 60 o igual a 5", product.SetDiscount());
-            Assert.AreEqual("El descuento es correcto", product.SetDiscount());
-
-        }
-
-        //Test para validar que el precio final sea correcto
-        public void TestFinalAmmount()
+        //test para validar el total del descuento
+        public void TestDiscountTotal()
         {
             Purchase purchase = new Purchase();
-            Product product1 = new Product("Producto 1", 1000, 5);
+            Product product1 = new Product("Producto 1", 1000, 5);  //50  950
+            Product product2 = new Product("Producto 2", 1000, 10); //100 900
+            Product product3 = new Product("Producto 5", 1000);    //50  950
 
             purchase.Add(product1);
-            purchase.UpdateFinalAmmount();
-
-            Assert.AreEqual(950, purchase.finalAmmount);
-
-            Product product2 = new Product("Producto 2", 1000, 10);
-
             purchase.Add(product2);
-            purchase.UpdateFinalAmmount();
+            purchase.Add(product3);
 
-            Assert.AreEqual(1900, purchase.finalAmmount);
-
+            Assert.AreEqual(20, purchase.UpdateDiscount());
+            
         }
 
+        [TestMethod]
         //test para validar que el descuento adicional se aplique si la cantidad de productos es mayor a 3
         public void TestDiscountAdditional()
         {
@@ -55,30 +37,39 @@ namespace TestCalculator
             purchase.Add(product2);
             purchase.Add(product3);
             purchase.Add(product4);
-            purchase.UpdateFinalAmmount();
 
-            Assert.AreEqual(1800, purchase.finalAmmount);
+            Assert.AreEqual(5, purchase.UpdateDiscountAdditional()); //descuento adicional
+            Assert.AreEqual(55, purchase.UpdateDiscount()); //descuento total
 
         }
 
-        //test para validar el total del descuento
-        public void TestDiscountTotal()
+        [TestMethod]
+        //test para validar que el descuento adicional se aplique si la cantidad de productos es mayor a 6
+        public void TestDiscountAdditional2()
         {
             Purchase purchase = new Purchase();
             Product product1 = new Product("Producto 1", 1000, 5);  //50  950
             Product product2 = new Product("Producto 2", 1000, 10); //100 900
             Product product3 = new Product("Producto 3", 1000, 15); //150 850
             Product product4 = new Product("Producto 4", 1000, 20); //200 800
+            Product product5 = new Product("Producto 5", 1000, 25); //250 750
+            Product product6 = new Product("Producto 6", 1000, 30); //300 700
+            Product product7 = new Product("Producto 7", 1000, 35); //350 650
 
             purchase.Add(product1);
             purchase.Add(product2);
             purchase.Add(product3);
             purchase.Add(product4);
-            purchase.UpdateFinalAmmount();
+            purchase.Add(product5);
+            purchase.Add(product6);
+            purchase.Add(product7);
 
-            Assert.AreEqual(500, purchase.UpdateDiscount());
+            Assert.AreEqual(7, purchase.UpdateDiscountAdditional()); //descuento adicional
+            Assert.AreEqual(147, purchase.UpdateDiscount()); //descuento total
 
         }
+
+        
     }
 }
 
