@@ -9,8 +9,8 @@ namespace TestCalculator
     {
         [TestMethod]
 
-        //1. Test para verificar que el descuento por defecto es igual a 5
-        public void TestDefaultDiscountEquals5()
+        //1. Test to verify that the default discount equals five
+        public void TestWhenNoDiscountShouldUpdateItAsFive()
         {
             Purchase purch = new Purchase();
             Product product1 = new Product("Producto 1", 100, 0);
@@ -42,8 +42,8 @@ namespace TestCalculator
 
         [TestMethod]
 
-        //3. Test para validar el descuento default mas alto (7%)
-        public void TestHigherDefaultDiscountEquals7()
+        //3. Test to verify that the most higher default discount equals seven
+        public void TestWhenThereAreMoreThanFourProductsDefaultDiscountShouldBeSeven()
         {
             Purchase purch = new Purchase();
             Product product1 = new Product("Producto 1", 100, 0); //7
@@ -69,8 +69,8 @@ namespace TestCalculator
 
 
         [TestMethod]
-        //4. Test para validar el descuento general (10%)
-        public void TestGeneralDiscountIfGreaterThan5()
+        //4. Test to verify that the general discount applied to the purchase is 10
+        public void TestWhenThereAreMoreThanFiveProductsPurchaseDiscountShouldBeTen()
         {
             Purchase purch = new Purchase();
             Product product1 = new Product("Producto 1", 100, 0); //7
@@ -97,8 +97,9 @@ namespace TestCalculator
 
         }
         [TestMethod]
-        //5. test para chequear si son mas decimales
-        public void Test_Discount_Handle_Decimals()
+        
+        //5. Test to check if the program handles decimals
+        public void TestWhenDiscountOrPriceHaveDecimalsTheProgramShouldHandleThem()
         {
             Purchase purch = new Purchase();
             Product product1 = new Product("Producto 1", 45.23, 18); //8.1414
