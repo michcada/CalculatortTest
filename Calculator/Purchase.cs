@@ -11,10 +11,7 @@ namespace Calculator
         public List <Product> ProductsList = new List <Product> ();
         public float finalAmmount;
         public float totalDiscount;
-        public Purchase()
-        {
-            finalAmmount = 0;
-        }
+       
 
         //metodo para agregar productos a la lista
         public void Add(Product item)
@@ -23,34 +20,53 @@ namespace Calculator
         }
 
         //metodo para calcular el descuento
-        public float UpdateDiscount()
+        public double getDiscount(int defaultDiscount,int lowerDiscountLimit, int upperDiscountLimit,int productCountLimitToHigherDiscount, int higherDiscount, int productCountLimitToGeneralDiscount,int generalDiscount)
         {
-            float discount = 0;
+            double discount = 0;
             foreach (Product item in ProductsList)
             {
-                discount += item.discountPercent;
+                if (item.discountPercent == 0)
+                {
+                   
+                        if (ProductsList.Count <= productCountLimitToHigherDiscount)
+                        {
+                            item.discountPercent = defaultDiscount;
+                        }
+                        else
+                        {
+                            item.discountPercent = higherDiscount;
+                        }
+                    
+                    discount += item.getDiscount();
+                }
+                else {
+                    if (item.discountPercent <= upperDiscountLimit && item.discountPercent >= lowerDiscountLimit)
+                    {
+                        discount += item.getDiscount();
+                    }
+                }
+                
+            }
+            if(ProductsList.Count > productCountLimitToGeneralDiscount)
+            {
+                double extraDiscount =  FinalAmmount() * generalDiscount/100;
+                discount+= extraDiscount;
+
             }
             return discount;
         }
 
         //metodo para calcular el precio final sin descuentos
-        public float UpdateFinalAmmount()
+        public double FinalAmmount()
         {
-            float discount = UpdateDiscount();
-            
+            //float discount = ApplyDiscount();
+            double finalAmmount = 0;
             foreach (Product item in ProductsList)
             {
-                finalAmmount += item.price - item.ApplyDiscount();
+                finalAmmount += item.price;
             }
             
-           // si la cantidad de productos es mayor a 3, se aplica un descuento adicional del 10%
-
-            if (ProductsList.Count > 3)
-            {
-                finalAmmount = finalAmmount - (finalAmmount * 10 / 100);
-
-            }
-
+           
             return finalAmmount;
         }
 
