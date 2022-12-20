@@ -20,9 +20,9 @@ namespace Calculator
         }
 
         //metodo para calcular el descuento
-        public float getDiscount(int defaultDiscount,int lowerDiscountLimit, int upperDiscountLimit,int productCountLimitToHigherDiscount, int higherDiscount, int productCountLimitToGeneralDiscount,int generalDiscount)
+        public double getDiscount(int defaultDiscount,int lowerDiscountLimit, int upperDiscountLimit,int productCountLimitToHigherDiscount, int higherDiscount, int productCountLimitToGeneralDiscount,int generalDiscount)
         {
-            float discount = 0;
+            double discount = 0;
             foreach (Product item in ProductsList)
             {
                 if (item.discountPercent == 0)
@@ -49,7 +49,7 @@ namespace Calculator
             }
             if(ProductsList.Count > productCountLimitToGeneralDiscount)
             {
-                float extraDiscount =  FinalAmmount() * generalDiscount/100;
+                double extraDiscount =  FinalAmmount() * generalDiscount/100;
                 discount+= extraDiscount;
 
             }
@@ -57,10 +57,10 @@ namespace Calculator
         }
 
         //metodo para calcular el precio final sin descuentos
-        public float FinalAmmount()
+        public double FinalAmmount()
         {
             //float discount = ApplyDiscount();
-            float finalAmmount = 0;
+            double finalAmmount = 0;
             foreach (Product item in ProductsList)
             {
                 finalAmmount += item.price;

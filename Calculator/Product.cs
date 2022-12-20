@@ -4,12 +4,12 @@
 
     {
 
-        public float price;
+        public double price;
         public int discountPercent { get; set; }
         public string itemName;
 
         //crear el constructor, si no se pasa el descuento, se le asigna 5
-        public Product(string name, float price,int discountPercent)
+        public Product(string name, double price,int discountPercent)
         {
             this.itemName = name;
             this.price = price;
@@ -30,7 +30,7 @@
         //    }
         //}
 
-        public float getDiscount()
+        public double getDiscount()
         {
                               
           return this.price * discountPercent/100;

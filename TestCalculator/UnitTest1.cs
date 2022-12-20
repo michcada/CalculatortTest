@@ -6,11 +6,10 @@ namespace TestCalculator
     [TestClass]
     public class UnitTest1
 
-
     {
         [TestMethod]
 
-        //Test para verificar que el descuento por defecto es igual a 5
+        //1. Test para verificar que el descuento por defecto es igual a 5
         public void TestDefaultDiscountEquals5()
         {
             Purchase purch = new Purchase();
@@ -21,33 +20,29 @@ namespace TestCalculator
             // defaultDiscount: 5%, lowerDiscountLimit: 10%, upperrDiscountLimit: 60%,
             // productsForHigherDefaultDiscount: 4, higherDefaultDiscount: 7%,
             // generalDiscountCounter: 3, generalDiscountExtra: 10%
-            float finalDiscount = purch.getDiscount(5, 10, 60, 4, 7, 3, 10);
+            double finalDiscount = purch.getDiscount(5, 10, 60, 4, 7, 3, 10);
             Assert.AreEqual(finalDiscount, 15.0);
-            //Console.WriteLine("Completado test caso 1");
-
         }
 
         //[TestMethod]
 
-        //// Test para verificar que retorne un error cuando el descuento está fuera de rango
-        //public void TestDiscountOutOfLimits()
+        ////2. Test para verificar que retorne un error cuando el descuento está fuera de rango
+        //public void TestErrorThrowIfDiscountOutOfLimits()
         //{
 
         //    Purchase purch = new Purchase();
-                //Product product1 = new Product("Producto 1", 100, 61);
-                //Product product2 = new Product("Producto 2", 200, 7);
-                //purch.Add(product1);
-                //purch.Add(product2);
+        //Product product1 = new Product("Producto 1", 100, 61);
+        //Product product2 = new Product("Producto 2", 200, 7);
+        //purch.Add(product1);
+        //purch.Add(product2);
         //      //// VERIFICAR ERROR CON EXCEPTION 
 
-        //    Assert.AreEqual("Error: El descuento debe ser mayor a 10 o menor a 60 o igual a 5", product2.CheckDiscount());
-        
-
+        //    Must do an Assert that comparates an ERROR
         //}
 
         [TestMethod]
 
-        //Test para validar el descuento default mas alto (7%)
+        //3. Test para validar el descuento default mas alto (7%)
         public void TestHigherDefaultDiscountEquals7()
         {
             Purchase purch = new Purchase();
@@ -65,18 +60,16 @@ namespace TestCalculator
             // defaultDiscount: 5%, lowerDiscountLimit: 10%, upperrDiscountLimit: 60%,
             // productsForHigherDefaultDiscount: 4, higherDefaultDiscount: 7%,
             // generalDiscountCounter: 5, generalDiscountExtra: 10%
-            float finalDiscount = purch.getDiscount(5, 10, 60, 4, 7, 5, 10);
+            double finalDiscount = purch.getDiscount(5, 10, 60, 4, 7, 5, 10);
 
             //Discounts: def: 7%
 
             Assert.AreEqual(105, finalDiscount);
-            //  Console.WriteLine("Completado test caso 3");
-
         }
 
 
         [TestMethod]
-        //Test para validar el descuento general (10%)
+        //4. Test para validar el descuento general (10%)
         public void TestGeneralDiscountIfGreaterThan5()
         {
             Purchase purch = new Purchase();
@@ -96,14 +89,43 @@ namespace TestCalculator
             // defaultDiscount: 5%, lowerDiscountLimit: 10%, upperrDiscountLimit: 60%,
             // productsForHigherDefaultDiscount: 4, higherDefaultDiscount: 7%,
             // generalDiscountCounter: 5, generalDiscountExtra: 10%
-            float finalDiscount = purch.getDiscount(5, 10, 60, 4, 7, 5, 10);
+            double finalDiscount = purch.getDiscount(5, 10, 60, 4, 7, 5, 10);
 
             //Discounts: def: 7% ->147, + generalDiscount: 10% -> 210 = 357
 
             Assert.AreEqual(357, finalDiscount);
 
         }
-    }
-        //  
-}
+        [TestMethod]
+        //5. test para chequear si son mas decimales
+        public void Test_Discount_Handle_Decimals()
+        {
+            Purchase purch = new Purchase();
+            Product product1 = new Product("Producto 1", 45.23, 18); //8.1414
+            Product product2 = new Product("Producto 2", 170, 23); //39.1
+            purch.Add(product1);
+            purch.Add(product2);
+            double finalDiscount = purch.getDiscount(5, 10, 60, 4, 7, 5, 10);
+            Assert.AreEqual(47.2414, finalDiscount);
+        }
 
+        //[TestMethod]
+        ////6. HappyPath
+        ///public void TestMultipleDiscounts()
+        //{
+        //    Purchase purch = new Purchase();
+        //    Product product1 = new Product("Producto 1", 100, 18); //5
+        //    Product product2 = new Product("Producto 2", 200, 23); //10
+        //    Product product3 = new Product("Producto 3", 200, 23); //10
+        //    Product product4 = new Product("Producto 4", 200, 23); //10
+        //    Product product5 = new Product("Producto 5", 200, 23); //10
+        //    Product product6 = new Product("Producto 6", 200, 23); //10
+        //    Product product7 = new Product("Producto 7", 200, 23); //10
+        //    purch.Add(product1);
+        //    purch.Add(product2);
+        //    float finalDiscount = purch.getDiscount(5, 10, 60, 4, 7, 5, 10);
+        //    //Assertion
+        //}
+
+    }
+}
