@@ -34,11 +34,9 @@ namespace TestCalculator
         }
 
         [TestMethod]
-        // [ExpectedException(typeof(ArgumentOutOfRangeException))] Esto verifica que la excepci�n fue lanzada, pero entonces no se cumple que se muestre un mensaje de error
 
-
-        //2. Test para verificar que retorne un error cuando el descuento est� fuera de rango
-        public void TestErrorThrowIfDiscountOutOfLimits()
+        //2. Test to verify that the program returns an error when the discount is out of range
+        public void TestWhenDiscountOutOfLimitsShouldShowAnErrorMessage()
         {
 
             Purchase purch = new Purchase();
@@ -66,8 +64,8 @@ namespace TestCalculator
         [TestMethod]
 
 
-        //3. Test para validar el descuento default mas alto (7%)
-        public void TestHigherDefaultDiscountEquals7()
+        //3. Test to verify that the most higher default discount equals seven
+        public void TestWhenThereAreMoreThanFourProductsDefaultDiscountShouldBeSeven()
         {
             Purchase purch = new Purchase();
             Product product1 = new Product("Producto 1", 100); //7
@@ -101,8 +99,8 @@ namespace TestCalculator
 
 
         [TestMethod]
-        //4. Test para validar el descuento general (10%)
-        public void TestGeneralDiscountIfGreaterThan5()
+        //4. Test to verify that the general discount applied to the purchase is 10
+        public void TestWhenThereAreMoreThanFiveProductsPurchaseDiscountShouldBeTen()
         {
             Purchase purch = new Purchase();
             Product product1 = new Product("Producto 1", 100); //7
