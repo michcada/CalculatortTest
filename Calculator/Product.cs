@@ -9,7 +9,7 @@
         public string itemName;
 
         //crear el constructor, si no se pasa el descuento, se le asigna 5
-        public Product(string name, double price,int discountPercent)
+        public Product(string name, double price, int discountPercent)
         {
             this.itemName = name;
             this.price = price;

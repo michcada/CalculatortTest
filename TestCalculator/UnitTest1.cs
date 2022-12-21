@@ -1,4 +1,5 @@
 using Calculator;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Net.Http.Headers;
 
 namespace TestCalculator
@@ -8,29 +9,126 @@ namespace TestCalculator
 
     {
         [TestMethod]
-
-        //1. Test to verify that the default discount equals five
-        public void TestWhenNoDiscountShouldUpdateItAsFive()
+        // Debe calcular y retornar el descuento total de la compra cuando
+        // la informacion de descuento y producto son correctos.
+        public void ShouldReturnTotalDiscountWhenTheInfoEnteredIsValid()
         {
-            Purchase purch = new Purchase();
-            Product product1 = new Product("Producto 1", 100, 0);
-            Product product2 = new Product("Producto 2", 200, 0);
+            Discount discount = new()
+            {
+                DefaultDiscount = 5,
+                LowerDiscountLimit = 0,
+                UpperDiscountLimit = 60,
+                HigherDiscount = 7,
+                ProductCountLimitToDefaultDiscount = 4,
+                ProductCountLimitToHigherDiscount = 3,
+                GeneralDiscount = 10
+            };
+
+            Product product1 = new("Product1", 10, 10);
+            Product product2 = new("Product2", 10, 15);
+
+            Purchase purch = new();
+            purch.LoadDiscount(discount);
             purch.Add(product1);
             purch.Add(product2);
-            // defaultDiscount: 5%, lowerDiscountLimit: 10%, upperrDiscountLimit: 60%,
-            // productsForHigherDefaultDiscount: 4, higherDefaultDiscount: 7%,
-            // generalDiscountCounter: 3, generalDiscountExtra: 10%
-            //Setting up discount values.
-            purch.discount.defaultDiscount = 5;
-            purch.discount.lowerDiscountLimit = 0;
-            purch.discount.upperDiscountLimit = 60;
-            purch.discount.productCountLimitToDefaultDiscount = 4;
-            purch.discount.higherDiscount = 7;
-            purch.discount.productCountLimitToHigherDiscount = 3;
-            purch.discount.generalDiscount = 10;
+
             double finalDiscount = purch.getDiscount();
-            Assert.AreEqual(finalDiscount, 15.0);
+            Assert.AreEqual(finalDiscount, 2.5);
         }
+
+        [TestMethod]
+        // Debe calcular y retornar el descuento total de la compra cuando
+        // el porcentaje de descuento SI esta en el rango de 10% y 60%.
+        public void ShouldReturnTotalDiscountWhenThePercentEnteredIsValid()
+        {
+            Discount discount = new()
+            {
+                DefaultDiscount = 5,
+                LowerDiscountLimit = 10,
+                UpperDiscountLimit = 60,
+                HigherDiscount = 7,
+                ProductCountLimitToDefaultDiscount = 4,
+                ProductCountLimitToHigherDiscount = 3,
+                GeneralDiscount = 10
+            };
+
+            Product product1 = new("Product1", 10, 10);
+            Product product2 = new("Product2", 10, 60);
+
+            Purchase purch = new();
+            purch.LoadDiscount(discount);
+            purch.Add(product1);
+            purch.Add(product2);
+
+            var actual = purch.getDiscount();
+            var expected = 7;
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod]
+        // Debe retornar excepcion con un mensaje cuando
+        // el porcentaje de descuento NO esta en el rango de 10% y 60%.
+        public void ShouldReturnExceptionWhenThePercentEnteredIsInvalid()
+        {
+            Discount discount = new()
+            {
+                DefaultDiscount = 5,
+                LowerDiscountLimit = 10,
+                UpperDiscountLimit = 60,
+                HigherDiscount = 7,
+                ProductCountLimitToDefaultDiscount = 4,
+                ProductCountLimitToHigherDiscount = 3,
+                GeneralDiscount = 10
+            };
+
+            Product product1 = new("Product1", 10, 2);
+            Product product2 = new("Product2", 10, 70);
+
+            Purchase purch = new();
+            purch.LoadDiscount(discount);
+            purch.Add(product1);
+            purch.Add(product2);
+
+            var actual = Assert.ThrowsException<Exception>(() => purch.getDiscount()).Message;
+            var expected = $"The discount percentage must be between " +
+                $"{discount.LowerDiscountLimit}% and {discount.UpperDiscountLimit}%";
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod]
+        // Debe calcular y retornar el descuento total de la compra aplicando el 5% cuando
+        // los articulos NO tengan descuento.
+        public void ShouldReturnTotalDiscountWhenItemNotHaveDiscount()
+ 
+        {
+            Discount discount = new()
+            {
+                DefaultDiscount = 5,
+                LowerDiscountLimit = 10,
+                UpperDiscountLimit = 60,
+                HigherDiscount = 7,
+                ProductCountLimitToDefaultDiscount = 4,
+                ProductCountLimitToHigherDiscount = 3,
+                GeneralDiscount = 10
+            };
+
+            Product product1 = new("Product1", 10, 0);
+            Product product2 = new("Product2", 10, 0);
+
+            Purchase purch = new();
+            purch.LoadDiscount(discount);
+            purch.Add(product1);
+            purch.Add(product2);
+
+            var actual = purch.getDiscount();
+            var expected = 1;
+
+            Assert.AreEqual(expected, actual);
+        }
+
+
 
         //[TestMethod]
 
@@ -51,7 +149,7 @@ namespace TestCalculator
 
         //        [TestMethod]
 
-                  //3. Test to verify that the most higher default discount equals seven
+        //3. Test to verify that the most higher default discount equals seven
         //        public void TestWhenThereAreMoreThanFourProductsDefaultDiscountShouldBeSeven()
         //        {
         //            Purchase purch = new Purchase();
@@ -135,4 +233,5 @@ namespace TestCalculator
         //            double finalDiscount = purch.getDiscount(5, 10, 60, 4, 7, 5, 10);
         //            //Assertion
         //        }
-        }
+    }
+}

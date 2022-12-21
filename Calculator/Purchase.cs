@@ -11,7 +11,7 @@ namespace Calculator
     {
         public List <Product> ProductsList = new List<Product>();
         public float finalAmmount;
-        public Discount discount = new Discount();
+        public Discount discount = new();
 
         
 
@@ -30,28 +30,33 @@ namespace Calculator
                 if (item.discountPercent == 0)
                 {
                    
-                        if (ProductsList.Count <= discount.productCountLimitToHigherDiscount)
+                        if (ProductsList.Count <= discount.ProductCountLimitToHigherDiscount)
                         {
-                            item.discountPercent = discount.defaultDiscount;
+                            item.discountPercent = discount.DefaultDiscount;
                         }
                         else
                         {
-                            item.discountPercent = discount.higherDiscount;
+                            item.discountPercent = discount.HigherDiscount;
                         }
                     
                     discount.total += item.getDiscount();
                 }
                 else {
-                    if (item.discountPercent <= discount.upperDiscountLimit && item.discountPercent >= discount.lowerDiscountLimit)
+                    if (item.discountPercent <= discount.UpperDiscountLimit && item.discountPercent >= discount.LowerDiscountLimit)
                     {
                         discount.total += item.getDiscount();
+                    }
+                    else 
+                    {
+                        throw new Exception($"The discount percentage must be between" +
+                            $" {this.discount.LowerDiscountLimit}% and {this.discount.UpperDiscountLimit}%");
                     }
                 }
                 
             }
-            if(ProductsList.Count > discount.productCountLimitToDefaultDiscount)
+            if(ProductsList.Count > discount.ProductCountLimitToDefaultDiscount)
             {
-                double extraDiscount =  FinalAmmount() * discount.generalDiscount /100;
+                double extraDiscount =  FinalAmmount() * discount.GeneralDiscount /100;
                 discount.total+= extraDiscount;
 
             }
@@ -70,6 +75,10 @@ namespace Calculator
             }
             
             return finalAmmount;
+        }
+        public void LoadDiscount(Discount discount) 
+        {
+            this.discount= discount;
         }
 
     }

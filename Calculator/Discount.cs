@@ -9,13 +9,12 @@ namespace Calculator
     public class Discount
     {
         public double total;
-        public int defaultDiscount { get; set; }
-        public int lowerDiscountLimit { get; set; }
-        public int upperDiscountLimit { get; set; }
-        public int productCountLimitToHigherDiscount { get; set; }
-        public int higherDiscount { get; set; }
-        public int productCountLimitToDefaultDiscount { get; set; }
-        public int generalDiscount { get; set; }
-
+        public int DefaultDiscount { get; set; }
+        public int LowerDiscountLimit { get; set; }
+        public int UpperDiscountLimit { get; set; }
+        public int ProductCountLimitToHigherDiscount { get; set; }
+        public int HigherDiscount { get; set; }
+        public int ProductCountLimitToDefaultDiscount { get; set; }
+        public int GeneralDiscount { get; set; }
     }
 }
