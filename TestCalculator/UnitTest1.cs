@@ -1,4 +1,5 @@
 using Calculator;
+using System;
 using System.Net.Http.Headers;
 
 namespace TestCalculator
@@ -32,25 +33,34 @@ namespace TestCalculator
             Assert.AreEqual(finalDiscount, 15.0);
         }
 
-       //[TestMethod]
+        [TestMethod]
+       // [ExpectedException(typeof(ArgumentOutOfRangeException))] Esto verifica que la excepción fue lanzada, pero entonces no se cumple que se muestre un mensaje de error
 
-        ////2. Test para verificar que retorne un error cuando el descuento está fuera de rango
-        //public void TestErrorThrowIfDiscountOutOfLimits()
-        //{
+        //2. Test para verificar que retorne un error cuando el descuento está fuera de rango
+        public void TestErrorThrowIfDiscountOutOfLimits()
+        {
 
-        //    Purchase purch = new Purchase();
-        //    Product product1 = new Product("Producto 1", 100, 59);
-        //    Product product2 = new Product("Producto 2", 200);
-        //    purch.Add(product1);
-        //    purch.Add(product2);
-        //    //// VERIFICAR ERROR CON EXCEPTION 
-        //    double finalDiscount = purch.getDiscount();
-        //    Assert.AreEqual(ArgumentOutOfRangeException(), finalDiscount);
+            Purchase purch = new Purchase();
+            Product product1 = new Product("Producto 1", 100, 59);
+            Product product2 = new Product("Producto 2", 200);
+            purch.Add(product1);
+            purch.Add(product2);
+            string message = "This should return an error";
+            //    //// VERIFICAR ERROR CON EXCEPTION 
+
+            try
+            {
+                double finalDiscount = purch.getDiscount();
+            }
+            catch (ArgumentOutOfRangeException e)
+            {                
+                message = "Error: Discount out of the limits";
+                Console.WriteLine(message);
+            }
             
-            
-            
-        //    // Catches the assertion exception, and the test passes
-        //    }
+            Assert.AreEqual("Error: Discount out of the limits", message);
+
+        }
             
             
             //Must do an Assert that comparates an ERROR

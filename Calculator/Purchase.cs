@@ -46,7 +46,8 @@ namespace Calculator
                     {
                         discount.total += item.getDiscount();
                     }
-                    else {
+                    else 
+                    {
                         throw new ArgumentOutOfRangeException();
                     }
                 }
