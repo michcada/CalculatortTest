@@ -4,14 +4,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace Calculator
 {
     public class Purchase
     {
-        public List <Product> ProductsList = new List <Product> ();
+        public List <Product> ProductsList = new List<Product>();
         public float finalAmmount;
-        public float totalDiscount;
-       
+        public Discount discount = new Discount();
+
+        
 
         //metodo para agregar productos a la lista
         public void Add(Product item)
@@ -20,40 +22,41 @@ namespace Calculator
         }
 
         //metodo para calcular el descuento
-        public double getDiscount(int defaultDiscount,int lowerDiscountLimit, int upperDiscountLimit,int productCountLimitToHigherDiscount, int higherDiscount, int productCountLimitToGeneralDiscount,int generalDiscount)
+        public double getDiscount()
         {
-            double discount = 0;
+            
             foreach (Product item in ProductsList)
             {
                 if (item.discountPercent == 0)
                 {
                    
-                        if (ProductsList.Count <= productCountLimitToHigherDiscount)
+                        if (ProductsList.Count <= discount.productCountLimitToHigherDiscount)
                         {
-                            item.discountPercent = defaultDiscount;
+                            item.discountPercent = discount.defaultDiscount;
                         }
                         else
                         {
-                            item.discountPercent = higherDiscount;
+                            item.discountPercent = discount.higherDiscount;
                         }
                     
-                    discount += item.getDiscount();
+                    discount.total += item.getDiscount();
                 }
                 else {
-                    if (item.discountPercent <= upperDiscountLimit && item.discountPercent >= lowerDiscountLimit)
+                    if (item.discountPercent <= discount.upperDiscountLimit && item.discountPercent >= discount.lowerDiscountLimit)
                     {
-                        discount += item.getDiscount();
+                        discount.total += item.getDiscount();
                     }
                 }
                 
             }
-            if(ProductsList.Count > productCountLimitToGeneralDiscount)
+            if(ProductsList.Count > discount.productCountLimitToDefaultDiscount)
             {
-                double extraDiscount =  FinalAmmount() * generalDiscount/100;
-                discount+= extraDiscount;
+                double extraDiscount =  FinalAmmount() * discount.generalDiscount /100;
+                discount.total+= extraDiscount;
 
             }
-            return discount;
+            return discount.total;
+            ;
         }
 
         //metodo para calcular el precio final sin descuentos
@@ -66,7 +69,6 @@ namespace Calculator
                 finalAmmount += item.price;
             }
             
-           
             return finalAmmount;
         }
 
