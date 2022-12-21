@@ -27,7 +27,7 @@ namespace Calculator
             
             foreach (Product item in ProductsList)
             {
-                if (item.discountPercent == 0)
+                if (item.discountPercent < 0)
                 {
                    
                         if (ProductsList.Count <= discount.productCountLimitToHigherDiscount)
@@ -45,6 +45,9 @@ namespace Calculator
                     if (item.discountPercent <= discount.upperDiscountLimit && item.discountPercent >= discount.lowerDiscountLimit)
                     {
                         discount.total += item.getDiscount();
+                    }
+                    else {
+                        throw new ArgumentOutOfRangeException();
                     }
                 }
                 
