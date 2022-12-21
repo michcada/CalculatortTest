@@ -1,4 +1,5 @@
 using Calculator;
+using System;
 using System.Net.Http.Headers;
 
 namespace TestCalculator
@@ -13,11 +14,11 @@ namespace TestCalculator
         public void TestWhenNoDiscountShouldUpdateItAsFive()
         {
             Purchase purch = new Purchase();
-            Product product1 = new Product("Producto 1", 100, 0);
-            Product product2 = new Product("Producto 2", 200, 0);
+            Product product1 = new Product("Producto 1", 100);
+            Product product2 = new Product("Producto 2", 200);
             purch.Add(product1);
             purch.Add(product2);
-            // defaultDiscount: 5%, lowerDiscountLimit: 10%, upperrDiscountLimit: 60%,
+            // defaultDiscount: 5%, lowerDiscountLimit: 0%, upperrDiscountLimit: 60%,
             // productsForHigherDefaultDiscount: 4, higherDefaultDiscount: 7%,
             // generalDiscountCounter: 3, generalDiscountExtra: 10%
             //Setting up discount values.
@@ -32,22 +33,40 @@ namespace TestCalculator
             Assert.AreEqual(finalDiscount, 15.0);
         }
 
-        //[TestMethod]
+        [TestMethod]
+       // [ExpectedException(typeof(ArgumentOutOfRangeException))] Esto verifica que la excepción fue lanzada, pero entonces no se cumple que se muestre un mensaje de error
 
+<<<<<<< HEAD
         ////2. Test para verificar que retorne un error cuando el descuento estÃ¡ fuera de rango
         //public void TestErrorThrowIfDiscountOutOfLimits()
         //{
+=======
+        //2. Test para verificar que retorne un error cuando el descuento está fuera de rango
+        public void TestErrorThrowIfDiscountOutOfLimits()
+        {
+>>>>>>> ruyasi2
 
-        //    Purchase purch = new Purchase();
-        //Product product1 = new Product("Producto 1", 100, 61);
-        //Product product2 = new Product("Producto 2", 200, 7);
-        //purch.Add(product1);
-        //purch.Add(product2);
-        //      //// VERIFICAR ERROR CON EXCEPTION 
+            Purchase purch = new Purchase();
+            Product product1 = new Product("Producto 1", 100, 59);
+            Product product2 = new Product("Producto 2", 200);
+            purch.Add(product1);
+            purch.Add(product2);
+            string message = "This should return an error";
+            //    //// VERIFICAR ERROR CON EXCEPTION 
 
-        //    Must do an Assert that comparates an ERROR
-        //}
+            try
+            {
+                double finalDiscount = purch.getDiscount();
+            }
+            catch (ArgumentOutOfRangeException e)
+            {                
+                message = "Error: Discount out of the limits";
+                Console.WriteLine(message);
+            }
+            
+            Assert.AreEqual("Error: Discount out of the limits", message);
 
+<<<<<<< HEAD
 
         //        [TestMethod]
 
@@ -70,13 +89,50 @@ namespace TestCalculator
         //            // productsForHigherDefaultDiscount: 4, higherDefaultDiscount: 7%,
         //            // generalDiscountCounter: 5, generalDiscountExtra: 10%
         //            double finalDiscount = purch.getDiscount(5, 10, 60, 4, 7, 5, 10);
+=======
+        }
+            
+            
+            //Must do an Assert that comparates an ERROR
+    
 
-        //            //Discounts: def: 7%
+        [TestMethod]
+>>>>>>> ruyasi2
 
-        //            Assert.AreEqual(105, finalDiscount);
-        //        }
+        //3. Test para validar el descuento default mas alto (7%)
+        public void TestHigherDefaultDiscountEquals7()
+        {
+            Purchase purch = new Purchase();
+            Product product1 = new Product("Producto 1", 100); //7
+            Product product2 = new Product("Producto 2", 200); //14
+            Product product3 = new Product("Producto 3", 300); //21
+            Product product4 = new Product("Producto 4", 400); //28  
+            Product product5 = new Product("Producto 5", 500); //35 -> Total Default Discount:105. TotalPrice: 1500 . Extra 150 (10% general discount).
+            purch.Add(product1);
+            purch.Add(product2);
+            purch.Add(product3);
+            purch.Add(product4);
+            purch.Add(product5);
+            // defaultDiscount: 5%, lowerDiscountLimit: 0%, upperrDiscountLimit: 60%,
+            // productsForHigherDefaultDiscount: 4, higherDefaultDiscount: 7%,
+            // generalDiscountCounter: 3, generalDiscountExtra: 10%
+            //Setting up discount values.
+            purch.discount.defaultDiscount = 5;
+            purch.discount.lowerDiscountLimit = 0;
+            purch.discount.upperDiscountLimit = 60;
+            purch.discount.productCountLimitToDefaultDiscount = 4;
+            purch.discount.higherDiscount = 7;
+            purch.discount.productCountLimitToHigherDiscount = 3;
+            purch.discount.generalDiscount = 10;
+            double finalDiscount = purch.getDiscount();
+
+            //Discounts: def: 7%
+
+            Assert.AreEqual(255, finalDiscount);
+        }
 
 
+<<<<<<< HEAD
         //        [TestMethod]
         //        //4. Test to verify that the general discount applied to the purchase is 10
         //        public void TestWhenThereAreMoreThanFiveProductsPurchaseDiscountShouldBeTen()
@@ -94,17 +150,43 @@ namespace TestCalculator
         //            purch.Add(product4);
         //            purch.Add(product5);
         //            purch.Add(product6);
+=======
+        [TestMethod]
+        //4. Test para validar el descuento general (10%)
+        public void TestGeneralDiscountIfGreaterThan5()
+        {
+            Purchase purch = new Purchase();
+            Product product1 = new Product("Producto 1", 100); //7
+            Product product2 = new Product("Producto 2", 200); //14
+            Product product3 = new Product("Producto 3", 300); //21
+            Product product4 = new Product("Producto 4", 400); //28  
+            Product product5 = new Product("Producto 5", 500); //35 
+            Product product6 = new Product("Producto 6", 600); //42 -> Total Default Discount:147 // Total Price: 2100
+            purch.Add(product1);
+            purch.Add(product2);
+            purch.Add(product3);
+            purch.Add(product4);
+            purch.Add(product5);
+            purch.Add(product6);
+>>>>>>> ruyasi2
 
-        //            // defaultDiscount: 5%, lowerDiscountLimit: 10%, upperrDiscountLimit: 60%,
-        //            // productsForHigherDefaultDiscount: 4, higherDefaultDiscount: 7%,
-        //            // generalDiscountCounter: 5, generalDiscountExtra: 10%
-        //            double finalDiscount = purch.getDiscount(5, 10, 60, 4, 7, 5, 10);
+            // defaultDiscount: 5%, lowerDiscountLimit: 10%, upperrDiscountLimit: 60%,
+            // productsForHigherDefaultDiscount: 4, higherDefaultDiscount: 7%,
+            // generalDiscountCounter: 5, generalDiscountExtra: 10%
+            purch.discount.defaultDiscount = 5;
+            purch.discount.lowerDiscountLimit = 0;
+            purch.discount.upperDiscountLimit = 60;
+            purch.discount.productCountLimitToDefaultDiscount = 4;
+            purch.discount.higherDiscount = 7;
+            purch.discount.productCountLimitToHigherDiscount = 3;
+            purch.discount.generalDiscount = 10;
+            double finalDiscount = purch.getDiscount();
 
-        //            //Discounts: def: 7% ->147, + generalDiscount: 10% -> 210 = 357
+            //Discounts: def: 7% ->147, + generalDiscount: 10% -> 210 = 357
 
-        //            Assert.AreEqual(357, finalDiscount);
+            Assert.AreEqual(357, finalDiscount);
 
-        //        }
+        }
         //        [TestMethod]
         //        //5. Test to check if the program handles decimals
         //        public void TestWhenDiscountOrPriceHaveDecimalsTheProgramShouldHandleThem()

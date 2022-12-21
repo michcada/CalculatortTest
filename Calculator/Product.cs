@@ -15,6 +15,12 @@
             this.price = price;
             this.discountPercent = discountPercent;
         }
+        public Product(string name, double price)
+        {
+            this.itemName = name;
+            this.price = price;
+            this.discountPercent = -1;
+        }
 
         //valida que el descuento sea mayor a 10 o menor a 60 o igual a 5. si no cumple mostar mensaje de erorr
         //public string CheckDiscount()
