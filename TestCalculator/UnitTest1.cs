@@ -34,14 +34,14 @@ namespace TestCalculator
         }
 
         [TestMethod]
-       // [ExpectedException(typeof(ArgumentOutOfRangeException))] Esto verifica que la excepción fue lanzada, pero entonces no se cumple que se muestre un mensaje de error
+       // [ExpectedException(typeof(ArgumentOutOfRangeException))] Esto verifica que la excepciï¿½n fue lanzada, pero entonces no se cumple que se muestre un mensaje de error
 
 <<<<<<< HEAD
         ////2. Test para verificar que retorne un error cuando el descuento estÃ¡ fuera de rango
         //public void TestErrorThrowIfDiscountOutOfLimits()
         //{
 =======
-        //2. Test para verificar que retorne un error cuando el descuento está fuera de rango
+        //2. Test para verificar que retorne un error cuando el descuento estï¿½ fuera de rango
         public void TestErrorThrowIfDiscountOutOfLimits()
         {
 >>>>>>> ruyasi2
